@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -8,5 +9,10 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
+  loginService = new LoginService();
 
+  isAdmin = this.loginService.hasPermission('ADMIN');
+  isUser = this.loginService.hasPermission('CLIENT');
+
+  
 }

@@ -9,7 +9,7 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/admin/produtos">Produtos</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="isAdmin">
             <a class="nav-link active" aria-current="page" href="/admin/pedidos">Pedidos</a>
           </li>
           <li class="nav-item" >
@@ -19,3 +19,4 @@
       </div>
     </div>
   </nav>
+         
