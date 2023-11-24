@@ -1,38 +1,36 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgbModal, NgbModalRef, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProdutoslistComponent } from './produtoslist.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ProdutosService } from 'src/app/services/produtos.service';
+import { of } from 'rxjs';
+import { Produto } from 'src/app/models/produto';
+import { By } from '@angular/platform-browser';
 
-describe('ProdutoslistComponent', () => { //GRUPO DE TESTES DE UM COMPONENTE
+describe('ProdutoslistComponent', () => {
   let component: ProdutoslistComponent;
   let fixture: ComponentFixture<ProdutoslistComponent>;
+  let mockProdutosService: jasmine.SpyObj<ProdutosService>;
+  let mockNgbModal: jasmine.SpyObj<NgbModal>;
 
-  beforeEach(() => { //PREPARA AS DEPENDÊNCIAS INTERNAS PARA O TESTE
+  beforeEach(() => {
+    mockProdutosService = jasmine.createSpyObj('ProdutosService', ['listAll', 'exemploErro']);
+    mockNgbModal = jasmine.createSpyObj('NgbModal', ['open', 'dismissAll']);
 
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], //SE O COMPONENTE INVOCA ALGUM SERVICE, INCLUÍMOS ESSA DEPENDÊNCIA DE HTTP DE TESTE
       declarations: [ProdutoslistComponent],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA  //PARA QUE O KARMA NÃO CONFUNDA ELEMENTOS ANGULAR NO TEMPLATE COMO ERROS
-      ]
-    });
+      providers: [
+        { provide: ProdutosService, useValue: mockProdutosService },
+        { provide: NgbModal, useValue: mockNgbModal },
+      ],
+      imports: [NgbModule],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(ProdutoslistComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
-
   });
 
-  //CASO DE TESTE 1
-  it('Teste 1 - criação ok do componente', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
-/*
-  it('Teste 2 - existência da tag table', () =>{
-    const html = fixture.nativeElement as HTMLElement;
-    expect(html.querySelector('.container')?.textContent).toContain('table');
-  });
-*/
-
 
 });
-
